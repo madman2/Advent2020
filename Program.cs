@@ -5,7 +5,7 @@ namespace Advent2020
 {
     class Program
     {
-        private const string DayToSolve = "Day01";
+        private const string DayToSolve = "Day02";
         private const string FirstStarInputName = "input.txt";
         private const string SecondStarInputName = "input.txt";
 
@@ -14,7 +14,7 @@ namespace Advent2020
             Console.WriteLine("Hello World!");
 
             // Create solver
-            ISolver solver = new Day01();
+            ISolver solver = new Day02();
 
             try
             {
