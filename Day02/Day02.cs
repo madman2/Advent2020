@@ -7,7 +7,8 @@ namespace Advent2020
 {
     public class Day02 : ISolver
     {
-        private const int TargetSum = 2020;
+        public string FirstStarInputFile { get; } = "input.txt";
+        public string SecondStarInputFile { get; } = "input.txt";
 
         public string SolveFirstStar(StreamReader reader)
         {

@@ -5,10 +5,6 @@ namespace Advent2020
 {
     class Program
     {
-        private const string DayToSolve = "Day02";
-        private const string FirstStarInputName = "input.txt";
-        private const string SecondStarInputName = "input.txt";
-
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -19,7 +15,7 @@ namespace Advent2020
             try
             {
                 // Read first input file
-                var firstStarFilePath = Path.Combine(DayToSolve, FirstStarInputName);
+                var firstStarFilePath = Path.Combine(solver.GetType().Name, solver.FirstStarInputFile);
                 var firstStarFileReader = File.OpenText(firstStarFilePath);
 
                 var firstStarResult = solver.SolveFirstStar(firstStarFileReader);
@@ -33,7 +29,7 @@ namespace Advent2020
             try
             {
                 // Read second input file
-                var secondStarFilePath = Path.Combine(DayToSolve, SecondStarInputName);
+                var secondStarFilePath = Path.Combine(solver.GetType().Name, solver.SecondStarInputFile);
                 var secondStarFileReader = File.OpenText(secondStarFilePath);
 
                 var secondStarResult = solver.SolveSecondStar(secondStarFileReader);
