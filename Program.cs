@@ -10,7 +10,7 @@ namespace Advent2020
             Console.WriteLine("Hello World!");
 
             // Create solver
-            ISolver solver = new Day03();
+            ISolver solver = new Day04();
 
             try
             {
