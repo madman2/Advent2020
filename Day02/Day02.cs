@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Advent2020.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,14 +13,13 @@ namespace Advent2020
 
         public string SolveFirstStar(StreamReader reader)
         {
-            int count = 0;
+            var stringList = StreamParsers.GetStreamAsListOfDelimitedStrings(reader, ":".ToCharArray());
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            int count = 0;
+            foreach (var ruleAndPassword in stringList)
             {
-                var ruleAndPassword = line.Split(':');
-                var rule = ruleAndPassword[0].Trim();
-                var password = ruleAndPassword[1].Trim();
+                var rule = ruleAndPassword[0];
+                var password = ruleAndPassword[1];
                 if (validatePassword(rule, password, 1))
                     count++;
             }
@@ -29,12 +29,11 @@ namespace Advent2020
 
         public string SolveSecondStar(StreamReader reader)
         {
-            int count = 0;
+            var stringList = StreamParsers.GetStreamAsListOfDelimitedStrings(reader, ":".ToCharArray());
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            int count = 0;
+            foreach (var ruleAndPassword in stringList)
             {
-                var ruleAndPassword = line.Split(':');
                 var rule = ruleAndPassword[0].Trim();
                 var password = ruleAndPassword[1].Trim();
                 if (validatePassword(rule, password, 2))

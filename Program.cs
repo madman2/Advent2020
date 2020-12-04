@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace Advent2020
@@ -7,8 +8,6 @@ namespace Advent2020
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-
             // Create solver
             ISolver solver = new Day04();
 
@@ -18,8 +17,10 @@ namespace Advent2020
                 var firstStarFilePath = Path.Combine(solver.GetType().Name, solver.FirstStarInputFile);
                 var firstStarFileReader = File.OpenText(firstStarFilePath);
 
+                var stopWatch = Stopwatch.StartNew();
                 var firstStarResult = solver.SolveFirstStar(firstStarFileReader);
-                Console.WriteLine($"First star result: {firstStarResult}");
+                stopWatch.Stop();
+                Console.WriteLine($"First star result: {firstStarResult}, {stopWatch.ElapsedMilliseconds}ms");
             }
             catch (Exception e)
             {
@@ -32,8 +33,10 @@ namespace Advent2020
                 var secondStarFilePath = Path.Combine(solver.GetType().Name, solver.SecondStarInputFile);
                 var secondStarFileReader = File.OpenText(secondStarFilePath);
 
+                var stopWatch = Stopwatch.StartNew();
                 var secondStarResult = solver.SolveSecondStar(secondStarFileReader);
-                Console.WriteLine($"Second star result: {secondStarResult}");
+                stopWatch.Stop();
+                Console.WriteLine($"Second star result: {secondStarResult}, {stopWatch.ElapsedMilliseconds}ms");
             }
             catch (Exception e)
             {

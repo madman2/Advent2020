@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Advent2020.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,35 +12,21 @@ namespace Advent2020
         public string FirstStarInputFile { get; } = "input.txt";
         public string SecondStarInputFile { get; } = "input.txt";
 
-        private List<List<int>> treeMap;
+        private List<int[]> treeMap;
 
         public string SolveFirstStar(StreamReader reader)
         {
-            BuildMap(reader);
+            treeMap = StreamParsers.GetStreamAs2DIntArray(reader);
+
             return CountTrees(3, 1).ToString();
         }
 
         public string SolveSecondStar(StreamReader reader)
         {
-            BuildMap(reader);
+            treeMap = StreamParsers.GetStreamAs2DIntArray(reader);
 
             var treeProduct = CountTrees(1, 1) * CountTrees(3, 1) * CountTrees(5, 1) * CountTrees(7, 1) * CountTrees(1, 2);
             return treeProduct.ToString();
-        }
-
-        private void BuildMap(StreamReader reader)
-        {
-            treeMap = new List<List<int>>();
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                var rowList = new List<int>();
-                foreach (char c in line)
-                {
-                    rowList.Add(c == '.' ? 0 : 1);
-                }
-                treeMap.Add(rowList);
-            }
         }
 
         private double CountTrees(int right, int down)
@@ -51,7 +38,7 @@ namespace Advent2020
             while (y < (treeMap.Count - down))
             {
                 y += down;
-                x = (x + right) % treeMap.First().Count;
+                x = (x + right) % treeMap.First().Length;
                 treeCount += treeMap[y][x];
             }
 

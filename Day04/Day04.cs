@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Advent2020.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,13 +21,13 @@ namespace Advent2020
             while ((line = reader.ReadLine()) != null)
             {
                 string passport = "";
-                while (line != null && line.Trim().Length != 0)
+                while (!string.IsNullOrWhiteSpace(line))
                 {
                     passport += " " + line;
                     line = reader.ReadLine();
                 }
 
-                if (ValidatePassport(passport.Trim(), 0))
+                if (ValidatePassport(passport, 0))
                     count++;
             }
 
@@ -40,13 +41,13 @@ namespace Advent2020
             while ((line = reader.ReadLine()) != null)
             {
                 string passport = "";
-                while (line != null && line.Trim().Length != 0)
+                while (!string.IsNullOrWhiteSpace(line))
                 {
                     passport += " " + line;
                     line = reader.ReadLine();
                 }
 
-                if (ValidatePassport(passport.Trim(), 1))
+                if (ValidatePassport(passport, 1))
                     count++;
             }
 
@@ -56,13 +57,13 @@ namespace Advent2020
         private bool ValidatePassport(string passport, int version)
         {
             var requiredFields = new HashSet<string>() { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
-            var fields = passport.Split(null);
+            var fields = StringParsers.SplitDelimitedStringIntoListOfStrings(passport, new char[0]);
 
             foreach (var field in fields)
             {
                 var fieldAndValue = field.Split(':');
-                var fieldName = fieldAndValue[0].Trim();
-                var value = fieldAndValue[1].Trim();
+                var fieldName = fieldAndValue[0];
+                var value = fieldAndValue[1];
 
                 if (ValidateField(fieldName, value, version))
                 {

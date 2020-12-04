@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Advent2020.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,10 +16,11 @@ namespace Advent2020
         {
             var numberSet = new HashSet<int>();
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            // Read in file stream as list of ints
+            var numberList = StreamParsers.GetStreamAsIntList(reader);
+
+            foreach (var n in numberList)
             {
-                var n = int.Parse(line);
                 var difference = TargetSum - n;
                 if (numberSet.Contains(difference))
                 {
@@ -32,15 +34,13 @@ namespace Advent2020
 
         public string SolveSecondStar(StreamReader reader)
         {
-            var numberList = new List<int>();
             var numberDict = new Dictionary<int, int>();
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                var n = int.Parse(line);
-                numberList.Add(n);
+            // Read in file stream as list of ints
+            var numberList = StreamParsers.GetStreamAsIntList(reader);
 
+            foreach (var n in numberList)
+            {
                 // Count duplicate entries by incrementing the value in the dict
                 if (numberDict.ContainsKey(n))
                 {
