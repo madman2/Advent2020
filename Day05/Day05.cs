@@ -71,7 +71,6 @@ namespace Advent2020
         {
             int minRow = 0;
             int maxRow = 127;
-
             foreach (char c in rowEncoding)
             {
                 if (c == 'F')
