@@ -68,11 +68,11 @@ namespace Advent2020
             {
                 if (c == 'F')
                 {
-                    maxRow = maxRow - divideAndRoundUp(maxRow - minRow, 2);
+                    maxRow = maxRow - (maxRow - minRow + 1) / 2;
                 }
                 else if (c == 'B')
                 {
-                    minRow = minRow + divideAndRoundUp(maxRow - minRow, 2);
+                    minRow = minRow + (maxRow - minRow + 1) / 2;
                 }
             }
 
@@ -87,20 +87,15 @@ namespace Advent2020
             {
                 if (c == 'R')
                 {
-                    minColumn = minColumn + divideAndRoundUp(maxColumn - minColumn, 2);
+                    minColumn = minColumn + (maxColumn - minColumn + 1) / 2;
                 }
                 else if (c == 'L')
                 {
-                    maxColumn = maxColumn - divideAndRoundUp(maxColumn - minColumn, 2);
+                    maxColumn = maxColumn - (maxColumn - minColumn + 1) / 2;
                 }
             }
 
             return maxColumn;
-        }
-
-        private int divideAndRoundUp(int dividend, int divisor)
-        {
-            return (dividend + divisor - 1) / divisor;
         }
     }
 }
