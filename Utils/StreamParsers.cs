@@ -38,7 +38,7 @@ namespace Advent2020.Utils
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                listToReturn.Add(StringParsers.SplitDelimitedStringIntoListOfStrings(line, delimiter));
+                listToReturn.Add(StringParsers.SplitDelimitedStringIntoStringArray(line, delimiter));
             }
 
             return listToReturn;
@@ -50,7 +50,7 @@ namespace Advent2020.Utils
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                listToReturn.Add(StringParsers.SplitDelimitedStringIntoListOfInts(line, delimiter, fromBase));
+                listToReturn.Add(StringParsers.SplitDelimitedStringIntoIntArray(line, delimiter, fromBase));
             }
 
             return listToReturn;

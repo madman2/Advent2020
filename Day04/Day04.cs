@@ -57,7 +57,7 @@ namespace Advent2020
         private bool ValidatePassport(string passport, int version)
         {
             var requiredFields = new HashSet<string>() { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
-            var fields = StringParsers.SplitDelimitedStringIntoListOfStrings(passport, new char[0]);
+            var fields = StringParsers.SplitDelimitedStringIntoStringArray(passport, new char[0]);
 
             foreach (var field in fields)
             {

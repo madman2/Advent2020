@@ -5,7 +5,7 @@ namespace Advent2020.Utils
 {
     public static class StringParsers
     {
-        public static string[] SplitDelimitedStringIntoListOfStrings(string stringToSplit, char[] delimiter)
+        public static string[] SplitDelimitedStringIntoStringArray(string stringToSplit, char[] delimiter)
         {
             return stringToSplit.Trim().Split(delimiter)
                 .Select(x => x.Trim())
@@ -13,7 +13,7 @@ namespace Advent2020.Utils
                 .ToArray();
         }
 
-        public static int[] SplitDelimitedStringIntoListOfInts(string stringToSplit, char[] delimiter, int fromBase)
+        public static int[] SplitDelimitedStringIntoIntArray(string stringToSplit, char[] delimiter, int fromBase)
         {
             return stringToSplit.Trim().Split(delimiter)
                 .Select(x => x.Trim())
