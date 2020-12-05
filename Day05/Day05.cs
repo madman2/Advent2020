@@ -43,11 +43,6 @@ namespace Advent2020
                 var rowEncoding = pass.Substring(0, 7);
                 var columnEncoding = pass.Substring(7);
 
-                if (rowEncoding == "FFFFFFF" || rowEncoding == "BBBBBBB")
-                {
-                    continue;
-                }
-
                 var row = GetRow(rowEncoding);
                 var column = GetColumn(columnEncoding);
 
