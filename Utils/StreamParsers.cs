@@ -32,25 +32,25 @@ namespace Advent2020.Utils
             return listToReturn;
         }
 
-        public static List<string[]> GetStreamAsListOfDelimitedStrings(StreamReader reader, char[] delimiter)
+        public static List<List<string>> GetStreamAsListOfDelimitedStrings(StreamReader reader, char[] delimiter)
         {
-            var listToReturn = new List<string[]>();
+            var listToReturn = new List<List<string>>();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                listToReturn.Add(StringParsers.SplitDelimitedStringIntoStringArray(line, delimiter));
+                listToReturn.Add(StringParsers.SplitDelimitedStringIntoStringList(line, delimiter));
             }
 
             return listToReturn;
         }
 
-        public static List<int[]> GetStreamAsListOfDelimitedInts(StreamReader reader, char[] delimiter, int fromBase = 10)
+        public static List<List<int>> GetStreamAsListOfDelimitedInts(StreamReader reader, char[] delimiter, int fromBase = 10)
         {
-            var listToReturn = new List<int[]>();
+            var listToReturn = new List<List<int>>();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                listToReturn.Add(StringParsers.SplitDelimitedStringIntoIntArray(line, delimiter, fromBase));
+                listToReturn.Add(StringParsers.SplitDelimitedStringIntoIntList(line, delimiter, fromBase));
             }
 
             return listToReturn;

@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Advent2020.Utils
 {
     public static class StringParsers
     {
-        public static string[] SplitDelimitedStringIntoStringArray(string stringToSplit, char[] delimiter)
+        public static List<string> SplitDelimitedStringIntoStringList(string stringToSplit, char[] delimiter)
         {
             return stringToSplit.Trim().Split(delimiter)
                 .Select(x => x.Trim())
                 .Where(x => !string.IsNullOrEmpty(x))
-                .ToArray();
+                .ToList();
         }
 
-        public static int[] SplitDelimitedStringIntoIntArray(string stringToSplit, char[] delimiter, int fromBase)
+        public static List<int> SplitDelimitedStringIntoIntList(string stringToSplit, char[] delimiter, int fromBase)
         {
             return stringToSplit.Trim().Split(delimiter)
                 .Select(x => x.Trim())
                 .Where(x => !string.IsNullOrEmpty(x))
                 .Select(x => Convert.ToInt32(x, fromBase))
-                .ToArray();
+                .ToList();
         }
     }
 }
