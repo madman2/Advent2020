@@ -9,12 +9,6 @@ namespace Advent2020
 {
     class Day07: ISolver
     {
-        private struct BagRule
-        {
-            public int Quantity { get; set; }
-            public string Type { get; set; }
-        }
-
         public string FirstStarInputFile { get; } = "input.txt";
         public string SecondStarInputFile { get; } = "input.txt";
 
