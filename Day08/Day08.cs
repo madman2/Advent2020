@@ -74,9 +74,8 @@ namespace Advent2020
                 var split = instruction.Split(new char[0]);
                 var instructionName = split[0];
                 var instructionArg = split[1];
-                var instructionArgSign = instructionArg[0];
-                var instructionArgVal = int.Parse(instructionArg.Substring(1));
-                var newInstruction = new Instruction() { Type = instructionName, Value = (instructionArgSign == '-') ? -1 * instructionArgVal : instructionArgVal };
+                var instructionArgVal = int.Parse(instructionArg);
+                var newInstruction = new Instruction() { Type = instructionName, Value = instructionArgVal };
                 instructionsToReturn.Add(newInstruction);
             }
 
@@ -85,6 +84,7 @@ namespace Advent2020
 
         private int RunProgram(List<Instruction> instructions, int jmpToIgnore)
         {
+            // If jmpToIgnore < 0, track "seen" jmp indices
             if (jmpToIgnore < 0)
                 SeenJmpIndices = new List<int>();
 
