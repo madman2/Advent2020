@@ -22,14 +22,14 @@ namespace Advent2020
 
             try
             {
-                RunProgram(instructions, -1);
+                RunProgram(instructions);
             }
             catch (InfiniteLoopException e)
             {
                 return e.AccumulatorValue.ToString();
             }
 
-            throw new Exception("Unable to detect loop");
+            throw new Exception("No infinite loop detected");
         }
 
         public string SolveSecondStar(StreamReader reader)
@@ -40,7 +40,7 @@ namespace Advent2020
             try
             {
                 // Build up "seen" jmp indices
-                RunProgram(instructions, -1);
+                RunProgram(instructions, true);
             }
             catch
             {
@@ -49,19 +49,24 @@ namespace Advent2020
 
             int acc = -1;
             int jmpToSkipIndex = 0;
-            do
+            while (acc == -1 && jmpToSkipIndex < SeenJmpIndices.Count())
             {
                 try
                 {
-                    acc = RunProgram(instructions, SeenJmpIndices[jmpToSkipIndex]);
+                    instructions[SeenJmpIndices[jmpToSkipIndex]].Type = OpCode.NOP;
+                    acc = RunProgram(instructions);
                 }
                 catch
                 {
                     // Expect to find many loops here, ignore
                 }
+                finally
+                {
+                    instructions[SeenJmpIndices[jmpToSkipIndex]].Type = OpCode.JMP;
+                }
 
                 jmpToSkipIndex++;
-            } while (acc == -1 && jmpToSkipIndex < SeenJmpIndices.Count());
+            }
 
             return acc.ToString();
         }
@@ -72,56 +77,78 @@ namespace Advent2020
             foreach (var instruction in instructionTextList)
             {
                 var split = instruction.Split(new char[0]);
-                var instructionName = split[0];
-                var instructionArg = split[1];
-                var instructionArgVal = int.Parse(instructionArg);
-                var newInstruction = new Instruction() { Type = instructionName, Value = instructionArgVal };
+                OpCode opCode;
+                switch (split[0])
+                {
+                    case "nop":
+                        opCode = OpCode.NOP;
+                        break;
+                    case "acc":
+                        opCode = OpCode.ACC;
+                        break;
+                    case "jmp":
+                        opCode = OpCode.JMP;
+                        break;
+                    default:
+                        throw new ArgumentException($"Instruction contains an invalid OpCode: {split[0]}");
+                }
+                var instructionArgVal = int.Parse(split[1]);
+                var newInstruction = new Instruction() { Type = opCode, Value = instructionArgVal };
                 instructionsToReturn.Add(newInstruction);
             }
 
             return instructionsToReturn;
         }
 
-        private int RunProgram(List<Instruction> instructions, int jmpToIgnore)
+        private int RunProgram(List<Instruction> instructions, bool trackJmpIndices = false)
         {
             // If jmpToIgnore < 0, track "seen" jmp indices
-            if (jmpToIgnore < 0)
+            if (trackJmpIndices)
                 SeenJmpIndices = new List<int>();
 
             int acc = 0;
+            int ip = 0;
             var InstructionsRun = new HashSet<int>();
-            for (int i = 0; i < instructions.Count(); ++i)
+            while (ip < instructions.Count())
             {
-                if (InstructionsRun.Contains(i))
-                    throw new InfiniteLoopException($"Instruction {i} is being executed again", acc);
+                if (InstructionsRun.Contains(ip))
+                    throw new InfiniteLoopException($"Instruction {ip} is being executed again", acc);
 
-                InstructionsRun.Add(i);
+                InstructionsRun.Add(ip);
 
-                var instructionToRun = instructions[i];
+                var instructionToRun = instructions[ip];
                 switch (instructionToRun.Type)
                 {
-                    case "nop":
-                        continue;
-                    case "acc":
-                        acc += instructionToRun.Value;
+                    case OpCode.NOP:
+                        ip++;
                         break;
-                    case "jmp":
-                        if (jmpToIgnore == -1)
-                            SeenJmpIndices.Add(i);
-                        if (i != jmpToIgnore)
-                            i += instructionToRun.Value - 1;
+                    case OpCode.ACC:
+                        acc += instructionToRun.Value;
+                        ip++;
+                        break;
+                    case OpCode.JMP:
+                        if (trackJmpIndices)
+                            SeenJmpIndices.Add(ip);
+                        ip += instructionToRun.Value;
                         break;
                     default:
-                        throw new ArgumentException();
-                }
+                        throw new InvalidEnumArgumentException($"Unable to handle OpCode: {instructionToRun.Type}");
+                };
             }
 
             return acc;
         }
 
+        private enum OpCode
+        {
+            NOP,
+            ACC,
+            JMP
+        }
+
         private class Instruction
         {
-            public string Type { get; set; }
+            public OpCode Type { get; set; }
             public int Value { get; set; }
         }
 
