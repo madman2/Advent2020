@@ -13,6 +13,8 @@ namespace Advent2020
         public string FirstStarInputFile { get; } = "input.txt";
         public string SecondStarInputFile { get; } = "input.txt";
 
+        private List<int> SeenJmpIndices;
+
         public string SolveFirstStar(StreamReader reader)
         {
             var instructionTextList = StreamParsers.GetStreamAsStringList(reader);
@@ -35,28 +37,31 @@ namespace Advent2020
             var instructionTextList = StreamParsers.GetStreamAsStringList(reader);
             var instructions = BuildInstructionList(instructionTextList);
 
-            var jmpIndices = new List<int>();
-            for (int i = 0; i < instructions.Count(); ++i)
+            try
             {
-                if (instructions[i].Type == "jmp")
-                    jmpIndices.Add(i);
+                // Build up "seen" jmp indices
+                RunProgram(instructions, -1);
+            }
+            catch
+            {
+                // Expect infinite loop
             }
 
             int acc = -1;
             int jmpToSkipIndex = 0;
-            while (acc == -1 && jmpToSkipIndex < jmpIndices.Count())
+            do
             {
                 try
                 {
-                    acc = RunProgram(instructions, jmpIndices[jmpToSkipIndex]);
+                    acc = RunProgram(instructions, SeenJmpIndices[jmpToSkipIndex]);
                 }
                 catch
-                { 
+                {
                     // Expect to find many loops here, ignore
                 }
 
                 jmpToSkipIndex++;
-            }
+            } while (acc == -1 && jmpToSkipIndex < SeenJmpIndices.Count());
 
             return acc.ToString();
         }
@@ -80,6 +85,9 @@ namespace Advent2020
 
         private int RunProgram(List<Instruction> instructions, int jmpToIgnore)
         {
+            if (jmpToIgnore < 0)
+                SeenJmpIndices = new List<int>();
+
             int acc = 0;
             var InstructionsRun = new HashSet<int>();
             for (int i = 0; i < instructions.Count(); ++i)
@@ -98,6 +106,8 @@ namespace Advent2020
                         acc += instructionToRun.Value;
                         break;
                     case "jmp":
+                        if (jmpToIgnore == -1)
+                            SeenJmpIndices.Add(i);
                         if (i != jmpToIgnore)
                             i += instructionToRun.Value - 1;
                         break;
