@@ -1,9 +1,8 @@
 ﻿using Advent2020.Utils;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
-using System.Reflection.Metadata.Ecma335;
+using System.Linq;
 
 namespace Advent2020
 {
@@ -75,11 +74,11 @@ namespace Advent2020
             BagGraph = new Dictionary<string, List<ValueTuple<int, string>>>();
             foreach (var definition in listOfDefinitions)
             {
-                var bagAndSubBags = definition.Split("contain");
+                var bagAndSubBags = definition.Split("bags contain").Select(x => x.Trim()).ToList();
                 var subBags = StringParsers.SplitDelimitedStringIntoStringList(bagAndSubBags[1], new char[] { ',' });
 
                 var listOfRules = new List<ValueTuple<int, string>>();
-                if (bagAndSubBags[1].Trim() != "no other bags.")
+                if (bagAndSubBags[1] != "no other bags.")
                 {
                     foreach (var subBag in subBags)
                     {
@@ -87,7 +86,7 @@ namespace Advent2020
                     }
                 }
 
-                BagGraph.Add(GetBagColor(bagAndSubBags[0]), listOfRules);
+                BagGraph.Add(bagAndSubBags[0], listOfRules);
             }
         }
 
@@ -103,18 +102,6 @@ namespace Advent2020
             }
             ruleToReturn.Item2 = type.Trim();
             return ruleToReturn;
-        }
-
-        private string GetBagColor(string bag)
-        {
-            var bagWords = bag.Split(new char[0], StringSplitOptions.RemoveEmptyEntries);
-            var stringToReturn = "";
-            for (int i = 0; i < bagWords.Length - 1; ++i)
-            {
-                stringToReturn += " " + bagWords[i].Trim();
-            }
-
-            return stringToReturn.Trim();
         }
     }
 }
