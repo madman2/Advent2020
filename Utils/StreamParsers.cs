@@ -32,6 +32,32 @@ namespace Advent2020.Utils
             return listToReturn;
         }
 
+        public static List<UInt32> GetStreamAsUIntList(StreamReader reader, int fromBase = 10)
+        {
+            var listToReturn = new List<UInt32>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                var number = Convert.ToUInt32(line, fromBase);
+                listToReturn.Add(number);
+            }
+
+            return listToReturn;
+        }
+
+        public static List<double> GetStreamAsDoubleList(StreamReader reader)
+        {
+            var listToReturn = new List<double>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                var number = Convert.ToDouble(line);
+                listToReturn.Add(number);
+            }
+
+            return listToReturn;
+        }
+
         public static List<List<string>> GetStreamAsListOfDelimitedStrings(StreamReader reader, char[] delimiter)
         {
             var listToReturn = new List<List<string>>();
