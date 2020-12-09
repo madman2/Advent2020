@@ -32,26 +32,13 @@ namespace Advent2020.Utils
             return listToReturn;
         }
 
-        public static List<UInt32> GetStreamAsUIntList(StreamReader reader, int fromBase = 10)
+        public static List<long> GetStreamAsLongIntList(StreamReader reader, int fromBase = 10)
         {
-            var listToReturn = new List<UInt32>();
+            var listToReturn = new List<long>();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                var number = Convert.ToUInt32(line, fromBase);
-                listToReturn.Add(number);
-            }
-
-            return listToReturn;
-        }
-
-        public static List<double> GetStreamAsDoubleList(StreamReader reader)
-        {
-            var listToReturn = new List<double>();
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                var number = Convert.ToDouble(line);
+                var number = Convert.ToInt64(line, fromBase);
                 listToReturn.Add(number);
             }
 
@@ -77,6 +64,18 @@ namespace Advent2020.Utils
             while ((line = reader.ReadLine()) != null)
             {
                 listToReturn.Add(StringParsers.SplitDelimitedStringIntoIntList(line, delimiter, fromBase));
+            }
+
+            return listToReturn;
+        }
+
+        public static List<List<long>> GetStreamAsListOfDelimitedLongInts(StreamReader reader, char[] delimiter, int fromBase = 10)
+        {
+            var listToReturn = new List<List<long>>();
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                listToReturn.Add(StringParsers.SplitDelimitedStringIntoLongIntList(line, delimiter, fromBase));
             }
 
             return listToReturn;

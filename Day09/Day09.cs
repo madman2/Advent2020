@@ -12,12 +12,12 @@ namespace Advent2020
         public string SecondStarInputFile { get; } = "input.txt";
 
         private const int WindowSize = 25;
-        private double FirstStarResult;
+        private long FirstStarResult;
 
         public string SolveFirstStar(StreamReader reader)
         {
-            var numbers = StreamParsers.GetStreamAsDoubleList(reader);
-            var recentNumbers = new LinkedList<double>();
+            var numbers = StreamParsers.GetStreamAsLongIntList(reader);
+            var recentNumbers = new LinkedList<long>();
             for (int i = 0; i < WindowSize; i++)
             {
                 recentNumbers.AddLast(numbers[i]);
@@ -40,7 +40,7 @@ namespace Advent2020
 
         public string SolveSecondStar(StreamReader reader)
         {
-            var numbers = StreamParsers.GetStreamAsDoubleList(reader);
+            var numbers = StreamParsers.GetStreamAsLongIntList(reader);
             var subList = findSubListEqualToN(numbers, FirstStarResult);
 
             if (subList == null)
@@ -51,9 +51,9 @@ namespace Advent2020
             return (subList.Min() + subList.Max()).ToString();
         }
 
-        private bool isNumberValid(LinkedList<double> possibilities, double n)
+        private bool isNumberValid(LinkedList<long> possibilities, long n)
         {
-            var numberSet = possibilities.ToHashSet<double>();
+            var numberSet = possibilities.ToHashSet<long>();
             foreach (int num in numberSet)
             {
                 if (numberSet.Contains(n - num))
@@ -64,9 +64,9 @@ namespace Advent2020
             return false;
         }
 
-        private List<double> findSubListEqualToN(List<double> numbers, double n)
+        private List<long> findSubListEqualToN(List<long> numbers, long n)
         {
-            double currentSum = 0;
+            long currentSum = 0;
             int low = 0;
             int high = 0;
 

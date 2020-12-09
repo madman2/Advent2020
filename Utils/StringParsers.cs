@@ -22,5 +22,14 @@ namespace Advent2020.Utils
                 .Select(x => Convert.ToInt32(x, fromBase))
                 .ToList();
         }
+
+        public static List<long> SplitDelimitedStringIntoLongIntList(string stringToSplit, char[] delimiter, int fromBase)
+        {
+            return stringToSplit.Trim().Split(delimiter)
+                .Select(x => x.Trim())
+                .Where(x => !string.IsNullOrEmpty(x))
+                .Select(x => Convert.ToInt64(x, fromBase))
+                .ToList();
+        }
     }
 }

@@ -29,11 +29,11 @@ namespace Advent2020
             return treeProduct.ToString();
         }
 
-        private double CountTrees(int right, int down)
+        private long CountTrees(int right, int down)
         {
             int x = 0;
             int y = 0;
-            double treeCount = 0;
+            long treeCount = 0;
 
             while (y < (treeMap.Count - down))
             {
