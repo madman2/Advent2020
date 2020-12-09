@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Advent2020
 {
@@ -68,9 +67,10 @@ namespace Advent2020
         private List<double> findSubListEqualToN(List<double> numbers, double n)
         {
             double currentSum = 0;
+            int low = 0;
             int high = 0;
 
-            for (int low = 0; low < numbers.Count(); ++low)
+            for (; low < numbers.Count(); ++low)
             {
                 while (currentSum < n)
                 {
