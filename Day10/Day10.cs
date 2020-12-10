@@ -47,20 +47,17 @@ namespace Advent2020
             possibilities[0] = 1;
             foreach (var adapter in adapters)
             {
-                if (adapters.Contains(adapter))
+                if (adapters.Contains(adapter - 3))
                 {
-                    if (adapters.Contains(adapter - 3))
-                    {
-                        possibilities[adapter] += possibilities[adapter - 3];
-                    }
-                    if (adapters.Contains(adapter - 2))
-                    {
-                        possibilities[adapter] += possibilities[adapter - 2];
-                    }
-                    if (adapters.Contains(adapter - 1))
-                    {
-                        possibilities[adapter] += possibilities[adapter - 1];
-                    }
+                    possibilities[adapter] += possibilities[adapter - 3];
+                }
+                if (adapters.Contains(adapter - 2))
+                {
+                    possibilities[adapter] += possibilities[adapter - 2];
+                }
+                if (adapters.Contains(adapter - 1))
+                {
+                    possibilities[adapter] += possibilities[adapter - 1];
                 }
             }
 
