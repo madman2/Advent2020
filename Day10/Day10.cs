@@ -45,17 +45,18 @@ namespace Advent2020
             // Initialize possibilities[0] to 1, because there is only one way
             // to configure the port
             possibilities[0] = 1;
-            for (int i = 1; i < adapters.Count(); i++)
+            possibilities[1] = adapters.Contains(1) ? 1 : 0;
+            possibilities[2] = possibilities[1] + (adapters.Contains(2) ? 1 : 0);
+
+            for (int i = 3; i < adapters.Count(); i++)
             {
                 var adapter = adapters[i];
-                if (adapter >= 3)
-                    possibilities[adapter] += possibilities[adapter - 3];
-                if (adapter >= 2)
-                    possibilities[adapter] += possibilities[adapter - 2];
+                possibilities[adapter] += possibilities[adapter - 3];
+                possibilities[adapter] += possibilities[adapter - 2];
                 possibilities[adapter] += possibilities[adapter - 1];
             }
 
-            return possibilities.Last().ToString(); ;
+            return possibilities.Last().ToString();
         }
     }
 }
