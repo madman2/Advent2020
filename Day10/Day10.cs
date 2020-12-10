@@ -31,7 +31,8 @@ namespace Advent2020
 
         public string SolveSecondStar(StreamReader reader)
         {
-            var adapters = StreamParsers.GetStreamAsLongIntList(reader).ToHashSet();
+            var adapters = StreamParsers.GetStreamAsLongIntList(reader);
+            adapters.Sort();
 
             // Build up an array of possibilities, where possibilities[i] represents
             // the number of possible ways to configure a valid adapter chain
@@ -44,21 +45,21 @@ namespace Advent2020
             // Initialize possibilities[0] to 1, because there is only one way
             // to configure the port
             possibilities[0] = 1;
-            for (int i = 1; i < possibilities.Length; i++)
+            foreach (var adapter in adapters)
             {
-                if (adapters.Contains(i))
+                if (adapters.Contains(adapter))
                 {
-                    if (adapters.Contains(i - 3))
+                    if (adapters.Contains(adapter - 3))
                     {
-                        possibilities[i] += possibilities[i - 3];
+                        possibilities[adapter] += possibilities[adapter - 3];
                     }
-                    if (adapters.Contains(i - 2))
+                    if (adapters.Contains(adapter - 2))
                     {
-                        possibilities[i] += possibilities[i - 2];
+                        possibilities[adapter] += possibilities[adapter - 2];
                     }
-                    if (adapters.Contains(i - 1))
+                    if (adapters.Contains(adapter - 1))
                     {
-                        possibilities[i] += possibilities[i - 1];
+                        possibilities[adapter] += possibilities[adapter - 1];
                     }
                 }
             }
