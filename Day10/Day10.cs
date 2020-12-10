@@ -32,6 +32,9 @@ namespace Advent2020
         public string SolveSecondStar(StreamReader reader)
         {
             var adapters = StreamParsers.GetStreamAsLongIntList(reader);
+
+            // Add port, which has effective joltage 0
+            adapters.Add(0);
             adapters.Sort();
 
             // Build up an array of possibilities, where possibilities[i] represents
@@ -39,26 +42,17 @@ namespace Advent2020
             // ending in i
             long[] possibilities = new long[adapters.Max() + 1];
 
-            // Add port, which has effective joltage 0
-            adapters.Add(0);
-
             // Initialize possibilities[0] to 1, because there is only one way
             // to configure the port
             possibilities[0] = 1;
-            foreach (var adapter in adapters)
+            for (int i = 1; i < adapters.Count(); i++)
             {
-                if (adapters.Contains(adapter - 3))
-                {
+                var adapter = adapters[i];
+                if (adapter >= 3)
                     possibilities[adapter] += possibilities[adapter - 3];
-                }
-                if (adapters.Contains(adapter - 2))
-                {
+                if (adapter >= 2)
                     possibilities[adapter] += possibilities[adapter - 2];
-                }
-                if (adapters.Contains(adapter - 1))
-                {
-                    possibilities[adapter] += possibilities[adapter - 1];
-                }
+                possibilities[adapter] += possibilities[adapter - 1];
             }
 
             return possibilities.Last().ToString(); ;
