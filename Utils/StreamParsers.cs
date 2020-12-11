@@ -81,25 +81,13 @@ namespace Advent2020.Utils
             return listToReturn;
         }
 
-        public static List<char[]> GetStreamAs2DCharArray(StreamReader reader)
+        public static List<List<int>> GetStreamAs2DIntArray(StreamReader reader, char oneRepresentation = '#')
         {
-            var listToReturn = new List<char[]>();
+            var listToReturn = new List<List<int>>();
             string line;
             while ((line = reader.ReadLine()) != null)
             {
-                listToReturn.Add(line.ToCharArray());
-            }
-
-            return listToReturn;
-        }
-
-        public static List<int[]> GetStreamAs2DIntArray(StreamReader reader, char oneRepresentation = '#')
-        {
-            var listToReturn = new List<int[]>();
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                listToReturn.Add(line.Select(x => x == oneRepresentation ? 1 : 0).ToArray());
+                listToReturn.Add(line.Select(x => x == oneRepresentation ? 1 : 0).ToList());
             }
 
             return listToReturn;
