@@ -12,7 +12,7 @@ namespace Advent2020
         public string FirstStarInputFile { get; } = "input.txt";
         public string SecondStarInputFile { get; } = "input.txt";
 
-        private List<int[]> treeMap;
+        private List<List<int>> treeMap;
 
         public string SolveFirstStar(StreamReader reader)
         {
@@ -38,7 +38,7 @@ namespace Advent2020
             while (y < (treeMap.Count - down))
             {
                 y += down;
-                x = (x + right) % treeMap.First().Length;
+                x = (x + right) % treeMap.First().Count();
                 treeCount += treeMap[y][x];
             }
 
