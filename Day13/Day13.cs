@@ -148,8 +148,9 @@ namespace Advent2020
                 X += temp;
             }
 
-            // There are many possible unique solutions for this problem. For our case, we want
-            // the unique solution between (-N, 0)
+            // X is one solution to this problem, but X + b * N is also a solution for all integers b
+            // For our case, we want the unique solution between (-N, 0)
+            // prod == N
             while (X < -prod)
             {
                 X += prod;
