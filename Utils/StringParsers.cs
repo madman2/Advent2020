@@ -14,7 +14,7 @@ namespace Advent2020.Utils
                 .ToList();
         }
 
-        public static List<int> SplitDelimitedStringIntoIntList(string stringToSplit, char[] delimiter, int fromBase)
+        public static List<int> SplitDelimitedStringIntoIntList(string stringToSplit, char[] delimiter, int fromBase = 10)
         {
             return stringToSplit.Trim().Split(delimiter)
                 .Select(x => x.Trim())
@@ -23,7 +23,7 @@ namespace Advent2020.Utils
                 .ToList();
         }
 
-        public static List<long> SplitDelimitedStringIntoLongIntList(string stringToSplit, char[] delimiter, int fromBase)
+        public static List<long> SplitDelimitedStringIntoLongIntList(string stringToSplit, char[] delimiter, int fromBase = 10)
         {
             return stringToSplit.Trim().Split(delimiter)
                 .Select(x => x.Trim())
