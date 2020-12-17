@@ -9,7 +9,7 @@ namespace Advent2020
         static void Main(string[] args)
         {
             // Create solver
-            ISolver solver = new Day16();
+            ISolver solver = new Day17();
 
             try
             {
