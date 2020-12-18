@@ -1,11 +1,8 @@
 ﻿using Advent2020.Utils;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Advent2020
