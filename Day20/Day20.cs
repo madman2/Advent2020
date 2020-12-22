@@ -100,7 +100,7 @@ namespace Advent2020
             image.ReplaceChar(SeaMonster, '#', 'O');
             int waterRoughness = image.CountCharInstances('#');
 
-            //image.PrintTrueImage();
+            image.PrintTrueImage();
 
             return waterRoughness.ToString();
         }
@@ -194,6 +194,7 @@ namespace Advent2020
             private List<Tile> tiles;
             private int dim;
             private char[][] trueImage;
+            private Dictionary<(int edgePos, int edgeVal), List<Tile>> edgeLookup;
 
             public bool Solved { get; private set; }
 
@@ -201,6 +202,22 @@ namespace Advent2020
             {
                 this.dim = dim;
                 this.tiles = tiles;
+                edgeLookup = new Dictionary<(int edgePos, int edgeVal), List<Tile>>();
+                foreach (var tile in tiles)
+                {
+                    for (int edgePos = 0; edgePos < tile.Edges.Count; edgePos++)
+                    {
+                        var edgeEntry = (edgePos, tile.Edges[edgePos]);
+                        if (edgeLookup.ContainsKey(edgeEntry))
+                        {
+                            edgeLookup[edgeEntry].Add(tile);
+                        }
+                        else
+                        {
+                            edgeLookup[edgeEntry] = new List<Tile>() { tile };
+                        }
+                    }
+                }
             }
 
             public void Solve()
@@ -251,48 +268,38 @@ namespace Advent2020
 
             private List<Tile> GetPossibleTiles(int row, int col, ISet<int> usedTiles)
             {
-                var possibleTiles = new List<Tile>();
-                var requiredEdges = new List<int> { -1, -1, -1, -1 };
+                if (row == 0 && col == 0)
+                {
+                    return tiles;
+                }
+
+                var matchingTiles = new HashSet<Tile>();
                 if (row > 0)
                 {
                     if (rawImage[row - 1][col] != null)
                     {
-                        requiredEdges[0] = rawImage[row - 1][col].Edges[2];
+                        var validTilesTop = edgeLookup[(0, rawImage[row - 1][col].Edges[2])];
+                        foreach (var tile in validTilesTop)
+                        {
+                            matchingTiles.Add(tile);
+                        }
                     }
                 }
                 if (col > 0)
                 {
                     if (rawImage[row][col - 1] != null)
                     {
-                        requiredEdges[3] = rawImage[row][col - 1].Edges[1];
-                    }
-                }
-
-                foreach (var tile in tiles)
-                {
-                    if (usedTiles.Contains(tile.Id))
-                    {
-                        continue;
-                    }
-
-                    var valid = true;
-                    for (int i = 0; i < requiredEdges.Count; i++)
-                    {
-                        if (requiredEdges[i] >= 0)
+                        var validTilesLeft = edgeLookup[(3, rawImage[row][col - 1].Edges[1])];
+                        foreach (var tile in validTilesLeft)
                         {
-                            if (tile.Edges[i] != requiredEdges[i])
-                            {
-                                valid = false;
-                            }
+                            matchingTiles.Add(tile);
                         }
                     }
-                    if (valid)
-                    {
-                        possibleTiles.Add(tile);
-                    }
                 }
 
-                return possibleTiles;
+                matchingTiles.RemoveWhere(x => usedTiles.Contains(x.Id));
+
+                return matchingTiles.ToList();
             }
 
             public List<int> GetCornerTileIds()
