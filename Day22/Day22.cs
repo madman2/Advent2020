@@ -58,11 +58,7 @@ namespace Advent2020
                 }
             }
 
-            var winner = -1;
-            while (!playerHands.Values.Any(cards => cards.Count == 0))
-            {
-                winner = RecursiveCombat(playerHands[1], playerHands[2]);
-            }
+            var winner = RecursiveCombat(playerHands[1], playerHands[2]);
             var winningCards = playerHands[winner];
 
             return ComputeHandScore(winningCards).ToString();
